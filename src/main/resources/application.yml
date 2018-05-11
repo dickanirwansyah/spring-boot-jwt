@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_belajar
+    username: root
+    password: root
+  jpa:
+    generate-ddl: true
+    show-sql: true
+
+---
+#jwt
+app:
+  jwtSecret: JWTSuperSecretKey
+  jwtExpirationInMs: 604800000
