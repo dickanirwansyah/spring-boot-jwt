@@ -35,13 +35,14 @@ public class CustomJwtProvider {
                 .compact();
     }
 
-    public Long getUsersIdFromJWT(String token){
+    public String getUsersIdFromJWT(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .getBody();
 
-        return Long.parseLong(claims.getSubject());
+        //return Long.parseLong(claims.getSubject());
+        return claims.getSubject();
     }
 
 

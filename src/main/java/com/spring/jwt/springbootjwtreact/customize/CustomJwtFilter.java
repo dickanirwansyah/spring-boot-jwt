@@ -32,9 +32,9 @@ public class CustomJwtFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if(StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)){
-                long idusers = jwtTokenProvider.getUsersIdFromJWT(jwt);
+                String idusers = jwtTokenProvider.getUsersIdFromJWT(jwt);
 
-                UserDetails userDetails = customUserDetailService.loadUserByIdusers(String.valueOf(idusers));
+                UserDetails userDetails = customUserDetailService.loadUserByIdusers(idusers);
                 UsernamePasswordAuthenticationToken authentication = new
                         UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
