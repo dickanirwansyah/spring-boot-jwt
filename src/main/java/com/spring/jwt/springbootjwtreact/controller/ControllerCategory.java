@@ -3,6 +3,7 @@ package com.spring.jwt.springbootjwtreact.controller;
 import com.spring.jwt.springbootjwtreact.entity.Category;
 import com.spring.jwt.springbootjwtreact.request.CreatedCategoryRequest;
 import com.spring.jwt.springbootjwtreact.request.GetDetailCategoryIdRequest;
+import com.spring.jwt.springbootjwtreact.request.UpdatedCategoryRequest;
 import com.spring.jwt.springbootjwtreact.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,14 @@ public class ControllerCategory {
     public ResponseEntity<Category> createdCategory(@Valid @RequestBody CreatedCategoryRequest request){
         return Optional.ofNullable(categoryService.createdCategory(request))
                 .map(callbackJSON -> new ResponseEntity<>(callbackJSON, HttpStatus.CREATED))
+                .orElse(new ResponseEntity<Category>(HttpStatus.BAD_REQUEST));
+    }
+
+    @PostMapping(value = "/updated")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<Category> updatedCategory(@Valid @RequestBody UpdatedCategoryRequest request){
+        return Optional.ofNullable(categoryService.updatedCategory(request))
+                .map(callbackJSON -> new ResponseEntity<>(callbackJSON, HttpStatus.OK))
                 .orElse(new ResponseEntity<Category>(HttpStatus.BAD_REQUEST));
     }
 

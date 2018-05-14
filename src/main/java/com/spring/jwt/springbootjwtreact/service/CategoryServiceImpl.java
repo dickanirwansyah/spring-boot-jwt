@@ -4,6 +4,7 @@ import com.spring.jwt.springbootjwtreact.entity.Category;
 import com.spring.jwt.springbootjwtreact.repository.CategoryRepository;
 import com.spring.jwt.springbootjwtreact.request.CreatedCategoryRequest;
 import com.spring.jwt.springbootjwtreact.request.GetDetailCategoryIdRequest;
+import com.spring.jwt.springbootjwtreact.request.UpdatedCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +25,30 @@ public class CategoryServiceImpl implements CategoryService{
         return category;
     }
 
+    @Override
+    public Category updatedCategory(UpdatedCategoryRequest request) {
+
+        Category category = null;
+        if(request.getCategoryId() != null){
+                category = EditedCategory(
+                    request.getCategoryId(),
+                    request.getName(),
+                    request.getDescription());
+        }
+        categoryRepository.save(category);
+        return category;
+    }
+
     private Category newCategory(String name, String description){
         return Category.builder()
+                .name(name)
+                .description(description)
+                .build();
+    }
+
+    private Category EditedCategory(String categoryId, String name, String description){
+        return Category.builder()
+                .categoryId(categoryId)
                 .name(name)
                 .description(description)
                 .build();
